@@ -143,8 +143,14 @@ static void app::OnKey( int key )
 {
 	printf("OnKey‚ªŒÄ‚Î‚ê‚Ü‚µ‚½\n");
 	printf("%c ( %d )\n",key,key);
-
-	mainform::MoveActiveTextBoxCareTo(4);
+	switch (key)
+	{
+		case VK_RIGHT:mainform::MoveActiveTextBoxCareBy(+1); break;
+		case VK_LEFT:mainform::MoveActiveTextBoxCareBy(-1); break;
+		case VK_TAB:mainform::SelectNextTextBox(); break;
+		default: break;
+	}
+	// mainform::MoveActiveTextBoxCareTo(14);
 }
 
 

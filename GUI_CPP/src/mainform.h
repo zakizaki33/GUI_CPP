@@ -21,6 +21,10 @@ namespace mainform
 	void  ReleaseButtons( void );
 
 	void MoveActiveTextBoxCareTo(int position);
+
+	void MoveActiveTextBoxCareBy(int position);
+
+	void SelectNextTextBox(void);
 }
 
 #endif

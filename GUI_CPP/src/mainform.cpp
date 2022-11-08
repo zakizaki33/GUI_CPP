@@ -220,6 +220,62 @@ void mainform::MoveActiveTextBoxCareTo(int position){
 
 }
 
+void mainform::MoveActiveTextBoxCareBy(int position) {
+
+	int selected_textbox_index = -1;
+	int textbox_count = 3;
+
+	// textbox_data_table[0].caret_position += position;
+
+		// 今選択されているテキストボックスを探す
+	for (int i = 0; i < textbox_count; i++)
+	{
+		if (textbox_data_table[i].pressed)
+		{
+			textbox_data_table[i].caret_position += position;
+			break;
+		}
+	}
+
+	app::RepaintWindow();
+
+}
+
+/// <summary>カーソルを次のテキストボックスへ移動する</summary>
+void  mainform::SelectNextTextBox(void)
+{
+	int selected_textbox_index = -1;
+	int textbox_count = 3;
+
+	// 今選択されているテキストボックスを探す
+	for (int i = 0; i < textbox_count; i++)
+	{
+		if (textbox_data_table[i].pressed)
+		{
+			selected_textbox_index = i;
+			break;
+		}
+	}
+
+	// 次に選択するテキストボックスを決める
+	selected_textbox_index = (selected_textbox_index + 1) % textbox_count;
+
+	// 各テキストボックスの選択状態を再設定する
+	for (int i = 0; i < textbox_count; i++)
+	{
+		if (i == selected_textbox_index)
+		{
+			textbox_data_table[i].pressed = true;
+		}
+		else
+		{
+			textbox_data_table[i].pressed = false;
+		}
+	}
+
+	app::RepaintWindow();
+}
+
 
 /// <summary>アプリケーション固有の機能</summary>
 void  mainform::FunctionXXX( void )
