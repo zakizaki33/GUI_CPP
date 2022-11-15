@@ -232,7 +232,6 @@ void  graphics::PaintBitmapFromFile(HDC hdc, int x, int y, int w, int h, const w
 	::DeleteObject(hbmp_sample);
 }
 
-
 /// <summary>標準的な条件で文字列を描画する</summary>
 void  graphics::DrawStandardText(HDC hdc, int x, int y, int w, int h, const char* text)
 {
@@ -337,7 +336,6 @@ void  graphics::DrawStandardText(HDC hdc, int x, int y, int w, int h, const wcha
 void  graphics::DrawCustumizedText(HDC hdc, int x, int y, int w, int h, const char* text, int font_height)
 {
 	/* フォントデータを用意する */
-
 	HFONT hfont_normal = ::CreateFont(
 		font_height,					// 文字の高さ[論理単位]
 		0,					// 文字の幅（0を指定すると文字の高さを基準にして自動決定される）
@@ -352,23 +350,20 @@ void  graphics::DrawCustumizedText(HDC hdc, int x, int y, int w, int h, const ch
 		CLIP_DEFAULT_PRECIS,			// クリッピング精度
 		DEFAULT_QUALITY,			// 出力品質
 		DEFAULT_PITCH | FF_DONTCARE,	// ピッチとフォントファミリ
-		"ＭＳ ゴシック"			// フォント名
+		//"ＭＳ ゴシック"			// フォント名
+		"ＨＧＰ創英角ﾎﾟｯﾌﾟ体"
 	);
 
 	HFONT hfont_previous = (HFONT)::SelectObject(hdc, hfont_normal);
 
-
 	/* 色を変える */
-
 	COLORREF color_previous = ::SetTextColor(hdc, RGB(0x00, 0x00, 0x80));
 
 	/* 文字を描くとき背景部分を塗りつぶさないようにする */
-
 	int bkmode_previous = ::SetBkMode(hdc, TRANSPARENT);
 
 	/* 文字を書く */
-
-	int padding = 0;
+	int padding = 0;// 位置を調整しやすいようにパディングは０にする
 
 	RECT text_area = { 
 		x + padding,
@@ -376,17 +371,16 @@ void  graphics::DrawCustumizedText(HDC hdc, int x, int y, int w, int h, const ch
 		x + w - padding,
 		y + h - padding 
 	};
+
+	// 位置を調整しやすいように縦方向も中央揃え（改行文字は無効）
 	::DrawTextA(hdc, text, -1, &text_area, DT_LEFT| DT_VCENTER | DT_SINGLELINE);	// 改行文字"\n"のところで改行される
 
-
 	/* 元の設定に戻す */
-
 	::SelectObject(hdc, hfont_previous);
 	::SetTextColor(hdc, color_previous);
 	::SetBkMode(hdc, bkmode_previous);
 
 	/* 自分で作ったフォントデータを削除する */
-
 	::DeleteObject(hfont_normal);
 }
 

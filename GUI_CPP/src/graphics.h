@@ -31,8 +31,6 @@ namespace graphics
 	/// <summary>カスタマイズした条件で文字列を描画する</summary>
 	void  DrawCustumizedText(HDC hdc, int x, int y, int w, int h, const char* text, int font_height);
 	void  DrawCustumizedText(HDC hdc, int x, int y, int w, int h, const wchar_t* text, int font_height);
-
-
 }
 /*
 	3. 他のヘッダファイルに依存する場合にはinclude文を書く。
