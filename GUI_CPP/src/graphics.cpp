@@ -6,7 +6,6 @@
 #include <windows.h>
 #include "graphics.h"
 
-
 /// <summary>標準的なボタンを描画する</summary>
 /// <param name="hdc">描画対象のDC</param>
 /// <param name="x">左上端のX座標</param>
@@ -75,24 +74,18 @@ void  graphics::PaintStandardButton( HDC hdc, int x, int y, int w, int h, bool e
 void  graphics::PaintStandardTextBox(HDC hdc, int x, int y, int w, int h, const char* textbool, bool enabled, bool focused, int caret_pos)
 {
 	/* ペンやブラシを用意する */
-
 	HPEN hpen_normal = ::CreatePen(PS_SOLID, 1, RGB(0x00, 0xff, 0x00));
 	HPEN hpen_pressed = ::CreatePen(PS_DASHDOT, 1, RGB(0x00, 0x00, 0x00));
 	HPEN hpen_disabled = ::CreatePen(PS_DASHDOT, 1, RGB(0x66, 0x66, 0x66));
-
 	HBRUSH hbrush_normal = ::CreateSolidBrush(RGB(0xff, 0xff, 0xff));
 	HBRUSH hbrush_pressed = ::CreateSolidBrush(RGB(0xff, 0xcc, 0x00));
 	HBRUSH hbrush_disablede = ::CreateSolidBrush(RGB(0x99, 0x99, 0x99));
 
-
 	/* 元々のペンやブラシを変数に入れて残しておく */
-
 	HPEN   hpen_previous = (HPEN)::SelectObject(hdc, hpen_normal);
 	HBRUSH hbrush_previous = (HBRUSH)::SelectObject(hdc, hbrush_normal);
 
-
 	/* 条件に合わせてボタンの絵を描く */
-
 	if (enabled == false)
 	{
 		::SelectObject(hdc, hpen_disabled);
@@ -112,34 +105,72 @@ void  graphics::PaintStandardTextBox(HDC hdc, int x, int y, int w, int h, const 
 		::Rectangle(hdc, x, y, x + w, y + h);
 	}
 
-	int font_width = 10;
+	int font_width = 12;
 	int font_height=font_width*2 ;
-
 
 	// 代入するものがtextboolで合っている？
 	DrawCustumizedText(hdc, x, y , w ,h,textbool,font_height);
 
 	// この下にキャレットを描く ★☆★
 	::SelectObject(hdc, ::CreatePen(PS_SOLID, 1, RGB(0x00, 0x00, 0xff))); //色変更
-	
 	{
 		RECT rc = { 0,0,0,0 };
-		DrawTextA(hdc, textbool,caret_pos, &rc, DT_LEFT | DT_SINGLELINE | DT_VCENTER | DT_CALCRECT);
+		// DrawTextAにフォントの情報を渡す
+		// MSゴシックの設定を再度指示する
+		// TODO 44回目、47回目あたり復習
+
+			/* フォントデータを用意する */
+		HFONT hfont_normal = ::CreateFont(
+			font_height,					// 文字の高さ[論理単位]
+			0,					// 文字の幅（0を指定すると文字の高さを基準にして自動決定される）
+			0,					// 文字送り方向とX軸の角度[0.1°単位]
+			0,					// ベースラインとX軸の角度[0.1°単位]
+			FW_NORMAL,				// 線の太さ
+			0,					// 0:標準 / 1:斜体
+			0,					// 0:標準 / 1:下線付き
+			0,					// 0:標準 / 1:打ち消し線付き
+			DEFAULT_CHARSET,			// 文字セット
+			OUT_DEFAULT_PRECIS,			// 出力精度
+			CLIP_DEFAULT_PRECIS,			// クリッピング精度
+			DEFAULT_QUALITY,			// 出力品質
+			DEFAULT_PITCH | FF_DONTCARE,	// ピッチとフォントファミリ
+			"ＭＳ ゴシック"			// フォント名
+			//"ＨＧＰ創英角ﾎﾟｯﾌﾟ体"
+		);
+
+		HFONT hfont_previous = (HFONT)::SelectObject(hdc, hfont_normal);
+
+		/* 色を変える */
+		COLORREF color_previous = ::SetTextColor(hdc, RGB(0x00, 0x00, 0x80));
+
+		/* 文字を描くとき背景部分を塗りつぶさないようにする */
+		int bkmode_previous = ::SetBkMode(hdc, TRANSPARENT);
+
+
+			//　やっつけでやるならば、フォントの種類を設定するのを記述する
+			DrawTextA(hdc, textbool,caret_pos, &rc, DT_LEFT | DT_SINGLELINE | DT_VCENTER | DT_CALCRECT);
+		
+			//  フォントをもとに戻す　
+		/* 元の設定に戻す */
+		::SelectObject(hdc, hfont_previous);
+		::SetTextColor(hdc, color_previous);
+		::SetBkMode(hdc, bkmode_previous);
+
+		/* 自分で作ったフォントデータを削除する */
+		::DeleteObject(hfont_normal);
+
+
+
 		int text_width = rc.right - rc.left;
 		// int text_width = font_width * strlen(textbool);
-		::Rectangle(hdc, x + 8 + text_width, y + 4, x + 8 + 2 + text_width, (y + 4) + (h-8));
+		::Rectangle(hdc, x + 0 + text_width, y + 4, x + 0 + 2 + text_width, (y + 4) + (h-8));
 	}
 	
-
-
 	/* 元々のペンやブラシに戻す */
-
 	::SelectObject(hdc, hpen_previous);
 	::SelectObject(hdc, hbrush_previous);
 
-
 	/* 自分で作ったペンやブラシを削除する */
-
 	::DeleteObject(hpen_normal);
 	::DeleteObject(hpen_pressed);
 	::DeleteObject(hpen_disabled);
@@ -350,8 +381,8 @@ void  graphics::DrawCustumizedText(HDC hdc, int x, int y, int w, int h, const ch
 		CLIP_DEFAULT_PRECIS,			// クリッピング精度
 		DEFAULT_QUALITY,			// 出力品質
 		DEFAULT_PITCH | FF_DONTCARE,	// ピッチとフォントファミリ
-		//"ＭＳ ゴシック"			// フォント名
-		"ＨＧＰ創英角ﾎﾟｯﾌﾟ体"
+		"ＭＳ ゴシック"			// フォント名
+		//"ＨＧＰ創英角ﾎﾟｯﾌﾟ体"
 	);
 
 	HFONT hfont_previous = (HFONT)::SelectObject(hdc, hfont_normal);
@@ -408,7 +439,6 @@ void  graphics::DrawCustumizedText(HDC hdc, int x, int y, int w, int h, const wc
 
 	HFONT hfont_previous = (HFONT)::SelectObject(hdc, hfont_normal);
 
-
 	/* 色を変える */
 
 	COLORREF color_previous = ::SetTextColor(hdc, RGB(0x00, 0x00, 0x80));
@@ -421,7 +451,6 @@ void  graphics::DrawCustumizedText(HDC hdc, int x, int y, int w, int h, const wc
 
 	RECT text_area = { x, y, x + w, y + h };
 	::DrawTextW(hdc, text, -1, &text_area, DT_LEFT);	// 改行文字"\n"のところで改行される
-
 
 	/* 元の設定に戻す */
 

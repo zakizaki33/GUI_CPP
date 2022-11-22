@@ -66,11 +66,10 @@ namespace mainform
 
 	/*** アプリケーション固有の機能 ***/
 
-	static void FunctionXXX( void );
-	static void FunctionYYY( void );
-	static void FunctionZZZ( void );
+	static void FunctionXXX(void);
+	static void FunctionYYY(void);
+	static void FunctionZZZ(void);
 }
-
 
 /// <summary>全てのGUI部品を描画する</summary>
 void  mainform::PaintAllItems( HDC hdc )
@@ -148,7 +147,6 @@ void  mainform::PaintAllItems( HDC hdc )
 
 	graphics::PaintStandardTextBox(hdc, 150, 320, 200, 30,"ABCDEFGHIJK" ,true, false, -1);
 
-
 	// mainform内に画像を表示させる
 	graphics::PaintBitmapFromFile(hdc, 240, 180, 120, 120, "C:\\Users\\13273_Yamazaki\\source\\repos\\GUI_CPP\\GUI_CPP\\src\\Default.bmp");
 
@@ -225,9 +223,7 @@ void mainform::MoveActiveTextBoxCareBy(int position) {
 	int selected_textbox_index = -1;
 	int textbox_count = 3;
 
-	// textbox_data_table[0].caret_position += position;
-
-		// 今選択されているテキストボックスを探す
+	// 今選択されているテキストボックスを探す
 	for (int i = 0; i < textbox_count; i++)
 	{
 		if (textbox_data_table[i].pressed)
@@ -236,9 +232,7 @@ void mainform::MoveActiveTextBoxCareBy(int position) {
 			break;
 		}
 	}
-
 	app::RepaintWindow();
-
 }
 
 /// <summary>カーソルを次のテキストボックスへ移動する</summary>
@@ -294,4 +288,47 @@ void  mainform::FunctionYYY( void )
 void  mainform::FunctionZZZ( void )
 {
 	printf( "▲▲機能！\n" );
+}
+
+/// <summary>選択されているテキストボックスへ文字を入力する</summary>
+void  mainform::InsertCharacter(char c)
+{
+	int textbox_count = 3;
+
+	// 今選択されているテキストボックスを探す
+	for (int i = 0; i < textbox_count; i++)
+	{
+		if (textbox_data_table[i].pressed)
+		{
+			// キャレットの位置までの文字数
+			int position = textbox_data_table[i].caret_position;
+
+			// キャレットの位置を境として左側の部分文字列
+			char text1[300];
+			strncpy_s(
+				text1,										// コピー先
+				sizeof(text1),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
+				textbox_data_table[i].caption,				// コピー元
+				1									// コピーしたい文字数 ★
+			);
+
+			// キャレットの位置を境として右側の部分文字列
+			char text2[300];
+			strncpy_s(
+				text2,										// コピー先
+				sizeof(text2),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
+				textbox_data_table[i].caption + text1[i],	// コピー元
+				_TRUNCATE									// コピーしたい文字数（_TRUNCATEを指定したら残り全部）★
+			);
+
+			// 間に文字を追加して上書きする
+			sprintf_s(textbox_data_table[i].caption, "%s%c%s", text1, c, text2);
+
+			// キャレットの位置を進める
+			textbox_data_table[i].caret_position++;
+
+			break;
+		}
+	}
+	app::RepaintWindow();
 }

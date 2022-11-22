@@ -25,6 +25,8 @@ namespace mainform
 	void MoveActiveTextBoxCareBy(int position);
 
 	void SelectNextTextBox(void);
+
+	void InsertCharacter(char c);
 }
 
 #endif

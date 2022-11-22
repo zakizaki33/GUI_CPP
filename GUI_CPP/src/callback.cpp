@@ -117,8 +117,6 @@ static void app::OnPaint( HWND hwnd )
 	::ReleaseDC(hwnd, hdc_of_wnd);  // 返却する
 
 	::ValidateRect(hwnd, NULL);     //画面書き直し
-
-
 }
 
 
@@ -148,12 +146,16 @@ static void app::OnKey( int key )
 		case VK_RIGHT:mainform::MoveActiveTextBoxCareBy(+1); break;
 		case VK_LEFT:mainform::MoveActiveTextBoxCareBy(-1); break;
 		case VK_TAB:mainform::SelectNextTextBox(); break;
-		default: break;
+		default: 
+			/*
+			if( ('0' <= key) && (key <= "9")){
+				InsertCharacter((char)key);
+			}
+			*/
+			break;
 	}
 	// mainform::MoveActiveTextBoxCareTo(14);
 }
-
-
 
 /// <summary>イベントプロシージャ</summary>
 LRESULT CALLBACK app::Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp )
@@ -179,7 +181,6 @@ LRESULT CALLBACK app::Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp )
 			app::OnMouse(x, y, true);
 			break;
 		}
-
 
 		case WM_LBUTTONUP:
 		{   
