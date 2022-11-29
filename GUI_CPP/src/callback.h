@@ -10,5 +10,4 @@ namespace app
 	LRESULT CALLBACK Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp );
 }
 
-
 #endif

@@ -2,15 +2,14 @@
 #include <windows.h>
 #include "callback.h"
 #include "win32utility.h"
-// #include "graphics.h"
 #include "mainform.h"
 
 namespace app {
 	// 第8回参照
 	static void OnPaint(HWND hwnd);
-	//static void OnMouse(void);
 	static void OnMouse(int x, int y, bool pressed);
 	static void OnKey(int key);
+	static void OnChar(char c);
 }
 
 // static 関数の頭につける　この関数は　callback.cppのみで使う場合に書く
@@ -146,15 +145,33 @@ static void app::OnKey( int key )
 		case VK_RIGHT:mainform::MoveActiveTextBoxCareBy(+1); break;
 		case VK_LEFT:mainform::MoveActiveTextBoxCareBy(-1); break;
 		case VK_TAB:mainform::SelectNextTextBox(); break;
-		default: 
+	default: 
 			/*
 			if( ('0' <= key) && (key <= "9")){
 				InsertCharacter((char)key);
 			}
 			*/
-			break;
+		break;
 	}
 	// mainform::MoveActiveTextBoxCareTo(14);
+}
+
+static void app::OnChar(char c)
+{
+	if (('0' <= c) && (c <= '9'))
+	{
+		mainform::InsertCharacter(c);
+	}
+
+	if (('a' <= c) && (c <= 'z'))
+	{
+		mainform::InsertCharacter(c);
+	}
+
+	if (('A' <= c) && (c <= 'Z'))
+	{
+		mainform::InsertCharacter(c);
+	}
 }
 
 /// <summary>イベントプロシージャ</summary>
@@ -198,6 +215,14 @@ LRESULT CALLBACK app::Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp )
 			app::OnKey(keycode);
 			break;
 		}
+
+		case WM_CHAR:
+		{
+			char c = (char)win32utl::GetKeyCode(wp, lp);
+			app::OnChar(c);
+			break;
+		}
+
 		case WM_DESTROY :
 			//メンバーに所属していないグローバルを読み出す意味
 			::PostQuitMessage( 0 );

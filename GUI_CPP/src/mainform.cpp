@@ -309,7 +309,7 @@ void  mainform::InsertCharacter(char c)
 				text1,										// コピー先
 				sizeof(text1),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
 				textbox_data_table[i].caption,				// コピー元
-				1									// コピーしたい文字数 ★
+				position 									// コピーしたい文字数 ★
 			);
 
 			// キャレットの位置を境として右側の部分文字列
@@ -317,7 +317,7 @@ void  mainform::InsertCharacter(char c)
 			strncpy_s(
 				text2,										// コピー先
 				sizeof(text2),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
-				textbox_data_table[i].caption + text1[i],	// コピー元
+				textbox_data_table[i].caption + position,	// コピー元
 				_TRUNCATE									// コピーしたい文字数（_TRUNCATEを指定したら残り全部）★
 			);
 
