@@ -178,8 +178,18 @@ static void app::OnChar(char c)
 LRESULT CALLBACK app::Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp )
 {	
 	// printf("*");  // Procedure関数が呼ばれ続けていることを確認するためのコード
+	const UINT_PTR timer_id = 901;          // タイマーの通し番号となる適当な数字
+
 	switch( msg )
 	{
+		case WM_CREATE:                   // WM_CREATEイベントはウィンドウが表示されるときに発生する
+			SetTimer(hwnd, timer_id, 2000, NULL);
+			break;
+
+		case WM_TIMER:                    // SetTimerの設定に従って定期的にWM_TIMERが発生する
+			printf("!!!\n");
+			break;
+		
 		//　ここでは同じグループのメンバー同士なのでつけなくても動く
 		case WM_PAINT :
 			app::OnPaint(hwnd);
