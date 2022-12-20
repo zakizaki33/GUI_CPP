@@ -154,7 +154,6 @@ void  mainform::PaintAllItems( HDC hdc )
 	graphics::DrawStandardLine(hdc, 10, 10, 100, 100);
 }
 
-
 /// <summary>指定位置のボタンを押す</summary>
 /// <remarks>状態変化時の再描画とボタンが押されることによる機能の実行を含む</remarks>
 void  mainform::PressButtonAt( int x, int y )
@@ -187,7 +186,6 @@ void  mainform::PressButtonAt( int x, int y )
 		break;
 	}
 }
-
 
 /// <summary>全てのボタンを押されていない状態に戻す</summary>
 void  mainform::ReleaseButtons( void )
@@ -326,6 +324,49 @@ void  mainform::InsertCharacter(char c)
 
 			// キャレットの位置を進める
 			textbox_data_table[i].caret_position++;
+
+			break;
+		}
+	}
+	app::RepaintWindow();
+}
+
+// 文字削除
+void mainform::BackSpace(void) {
+
+	int textbox_count = 3;
+
+	// 今選択されているテキストボックスを探す
+	for (int i = 0; i < textbox_count; i++)
+	{
+		if (textbox_data_table[i].pressed)
+		{
+			// キャレットの位置までの文字数
+			int position = textbox_data_table[i].caret_position;
+
+			// キャレットの位置を境として左側の部分文字列
+			char text1[300];
+			strncpy_s(
+				text1,										// コピー先
+				sizeof(text1),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
+				textbox_data_table[i].caption,				// コピー元
+				position - static_cast<unsigned __int64>(1)	// コピーしたい文字数 ★
+			);
+
+			// キャレットの位置を境として右側の部分文字列
+			char text2[300];
+			strncpy_s(
+				text2,										// コピー先
+				sizeof(text2),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
+				textbox_data_table[i].caption + position,	// コピー元
+				_TRUNCATE									// コピーしたい文字数（_TRUNCATEを指定したら残り全部）★
+			);
+
+			// 間に文字を追加して上書きする
+			sprintf_s(textbox_data_table[i].caption, "%s%s", text1,text2);
+
+			// キャレットの位置を進める
+			textbox_data_table[i].caret_position--; // 変更点2022-12-20
 
 			break;
 		}

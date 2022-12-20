@@ -27,6 +27,11 @@ namespace mainform
 	void SelectNextTextBox(void);
 
 	void InsertCharacter(char c);
+
+	void BackSpace(void);
+
+
+
 }
 
 #endif

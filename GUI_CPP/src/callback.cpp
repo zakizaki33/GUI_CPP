@@ -145,6 +145,8 @@ static void app::OnKey( int key )
 		case VK_RIGHT:mainform::MoveActiveTextBoxCareBy(+1); break;
 		case VK_LEFT:mainform::MoveActiveTextBoxCareBy(-1); break;
 		case VK_TAB:mainform::SelectNextTextBox(); break;
+		case VK_BACK:mainform::BackSpace(); break;
+
 	default: 
 			/*
 			if( ('0' <= key) && (key <= "9")){
@@ -196,13 +198,8 @@ LRESULT CALLBACK app::Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp )
 			break;
 
 		case WM_LBUTTONDOWN :
-		{   // case 文では変数が生き残るので、スコープをはっきりさせて、変数の有効範囲を決める
-			// app::OnMouse();
-			// app::OnMouse(
-			// 	win32utl::GetMouseX(wp, lp),
-			// 	win32utl::GetMouseY(wp, lp)
-			// );
-
+		{   
+			// case 文では変数が生き残るので、スコープをはっきりさせて、変数の有効範囲を決める
 			int x = win32utl::GetMouseX(wp, lp);
 			int y = win32utl::GetMouseY(wp, lp);
 			app::OnMouse(x, y, true);
@@ -219,8 +216,6 @@ LRESULT CALLBACK app::Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp )
 		
 		case WM_KEYDOWN :
 		{
-			// app::OnKey( (int)wp);
-			// app::OnKey(win32utl::GetKeyCode(wp, lp));
 			int keycode = win32utl::GetKeyCode(wp, lp);
 			app::OnKey(keycode);
 			break;
