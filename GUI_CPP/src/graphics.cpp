@@ -111,15 +111,15 @@ void  graphics::PaintStandardTextBox(HDC hdc, int x, int y, int w, int h, const 
 	// 代入するものがtextboolで合っている？
 	DrawCustumizedText(hdc, x, y , w ,h,textbool,font_height);
 
-	// この下にキャレットを描く ★☆★
-	::SelectObject(hdc, ::CreatePen(PS_SOLID, 1, RGB(0x00, 0x00, 0xff))); //色変更
+	// この下でキャレットを描画する作業をする ★☆★
+	::SelectObject(hdc, ::CreatePen(PS_SOLID, 1, RGB(0xff, 0xff, 0x00))); //色変更
 	{
 		RECT rc = { 0,0,0,0 };
 		// DrawTextAにフォントの情報を渡す
 		// MSゴシックの設定を再度指示する
 		// TODO 44回目、47回目あたり復習
 
-			/* フォントデータを用意する */
+		/* フォントデータを用意する */
 		HFONT hfont_normal = ::CreateFont(
 			font_height,					// 文字の高さ[論理単位]
 			0,					// 文字の幅（0を指定すると文字の高さを基準にして自動決定される）
@@ -146,11 +146,10 @@ void  graphics::PaintStandardTextBox(HDC hdc, int x, int y, int w, int h, const 
 		/* 文字を描くとき背景部分を塗りつぶさないようにする */
 		int bkmode_previous = ::SetBkMode(hdc, TRANSPARENT);
 
-
-			//　やっつけでやるならば、フォントの種類を設定するのを記述する
-			DrawTextA(hdc, textbool,caret_pos, &rc, DT_LEFT | DT_SINGLELINE | DT_VCENTER | DT_CALCRECT);
+		//　やっつけでやるならば、フォントの種類を設定するのを記述する
+		DrawTextA(hdc, textbool,caret_pos, &rc, DT_LEFT | DT_SINGLELINE | DT_VCENTER | DT_CALCRECT);
 		
-			//  フォントをもとに戻す　
+		//  フォントをもとに戻す　
 		/* 元の設定に戻す */
 		::SelectObject(hdc, hfont_previous);
 		::SetTextColor(hdc, color_previous);
@@ -159,10 +158,8 @@ void  graphics::PaintStandardTextBox(HDC hdc, int x, int y, int w, int h, const 
 		/* 自分で作ったフォントデータを削除する */
 		::DeleteObject(hfont_normal);
 
-
-
 		int text_width = rc.right - rc.left;
-		// int text_width = font_width * strlen(textbool);
+		// Rectangleで細長い矩形を描いてキャレットを模倣する　★☆★
 		::Rectangle(hdc, x + 0 + text_width, y + 4, x + 0 + 2 + text_width, (y + 4) + (h-8));
 	}
 	

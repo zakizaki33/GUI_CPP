@@ -146,6 +146,7 @@ static void app::OnKey( int key )
 		case VK_LEFT:mainform::MoveActiveTextBoxCareBy(-1); break;
 		case VK_TAB:mainform::SelectNextTextBox(); break;
 		case VK_BACK:mainform::BackSpace(); break;
+		case VK_DELETE:mainform::Delete(); break;
 
 	default: 
 			/*
@@ -185,11 +186,25 @@ LRESULT CALLBACK app::Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp )
 	switch( msg )
 	{
 		case WM_CREATE:                   // WM_CREATEイベントはウィンドウが表示されるときに発生する
-			SetTimer(hwnd, timer_id, 2000, NULL);
+			SetTimer(hwnd, timer_id, 1000, NULL); // 1000は1000msec
 			break;
 
 		case WM_TIMER:                    // SetTimerの設定に従って定期的にWM_TIMERが発生する
-			printf("!!!\n");
+			printf("タイマーが動作しました!!!\n");
+			// graphics::PaintStandardTextBox を呼び出す???
+			// こんな感じ？？？　swが毎回初期化される？
+			/*
+			boolean sw = true;
+			if (sw == true) {
+				/// 処理
+				sw = false;
+			}
+			else {
+				/// 処理
+				sw = true;
+			}
+			*/
+
 			break;
 		
 		//　ここでは同じグループのメンバー同士なのでつけなくても動く

@@ -30,8 +30,7 @@ namespace mainform
 
 	void BackSpace(void);
 
-
-
+	void Delete(void);
 }
 
 #endif

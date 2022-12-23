@@ -331,7 +331,7 @@ void  mainform::InsertCharacter(char c)
 	app::RepaintWindow();
 }
 
-// 文字削除
+// 文字削除(BackSpace)
 void mainform::BackSpace(void) {
 
 	int textbox_count = 3;
@@ -343,32 +343,78 @@ void mainform::BackSpace(void) {
 		{
 			// キャレットの位置までの文字数
 			int position = textbox_data_table[i].caret_position;
+			// 文字数の判断を実施
+			if (1 <= position) {
+				// キャレットの位置を境として左側の部分文字列
+				char text1[300];
+				strncpy_s(
+					text1,										// コピー先
+					sizeof(text1),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
+					textbox_data_table[i].caption,				// コピー元
+					position - static_cast<unsigned __int64>(1)	// コピーしたい文字数 ★ 1文字減らす
+				);
 
-			// キャレットの位置を境として左側の部分文字列
-			char text1[300];
-			strncpy_s(
-				text1,										// コピー先
-				sizeof(text1),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
-				textbox_data_table[i].caption,				// コピー元
-				position - static_cast<unsigned __int64>(1)	// コピーしたい文字数 ★
-			);
+				// キャレットの位置を境として右側の部分文字列
+				char text2[300];
+				strncpy_s(
+					text2,										// コピー先
+					sizeof(text2),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
+					textbox_data_table[i].caption + position,	// コピー元
+					_TRUNCATE									// コピーしたい文字数（_TRUNCATEを指定したら残り全部）★
+				);
 
-			// キャレットの位置を境として右側の部分文字列
-			char text2[300];
-			strncpy_s(
-				text2,										// コピー先
-				sizeof(text2),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
-				textbox_data_table[i].caption + position,	// コピー元
-				_TRUNCATE									// コピーしたい文字数（_TRUNCATEを指定したら残り全部）★
-			);
+				// 間に文字を追加して上書きする
+				sprintf_s(textbox_data_table[i].caption, "%s%s", text1, text2);
 
-			// 間に文字を追加して上書きする
-			sprintf_s(textbox_data_table[i].caption, "%s%s", text1,text2);
+				// キャレットの位置を進める
+				textbox_data_table[i].caret_position--; // 変更点2022-12-20
+			}
+		break;
+		}
+	}
+	app::RepaintWindow();
+}
 
-			// キャレットの位置を進める
-			textbox_data_table[i].caret_position--; // 変更点2022-12-20
+// 文字削除(Delete)
+void mainform::Delete(void) {
 
-			break;
+	int textbox_count = 3;
+
+	// 今選択されているテキストボックスを探す
+	for (int i = 0; i < textbox_count; i++)
+	{
+		if (textbox_data_table[i].pressed)
+		{
+			// キャレットの位置までの文字数
+			int position = textbox_data_table[i].caret_position;
+			// 文字数の判断を実施
+			if(position <strlen(textbox_data_table[i].caption))
+			{
+				// キャレットの位置を境として左側の部分文字列
+				char text1[300];
+				strncpy_s(
+					text1,										// コピー先
+					sizeof(text1),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
+					textbox_data_table[i].caption,				// コピー元
+					position                                 	// コピーしたい文字数
+				);
+
+				// キャレットの位置を境として右側の部分文字列
+				char text2[300];
+				strncpy_s(
+					text2,										// コピー先
+					sizeof(text2),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
+					textbox_data_table[i].caption + position + 1,	// コピー元  ★ 1文字ずれた位置から
+					_TRUNCATE									// コピーしたい文字数（_TRUNCATEを指定したら残り全部）★
+				);
+
+				// 間に文字を追加して上書きする
+				sprintf_s(textbox_data_table[i].caption, "%s%s", text1, text2);
+
+				// キャレットの位置を進める
+				// textbox_data_table[i].caret_position; // 変更点2022-12-20
+			}
+		break;
 		}
 	}
 	app::RepaintWindow();
