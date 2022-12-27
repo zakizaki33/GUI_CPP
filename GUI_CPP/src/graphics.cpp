@@ -71,7 +71,7 @@ void  graphics::PaintStandardButton( HDC hdc, int x, int y, int w, int h, bool e
 	::DeleteObject( hbrush_disablede );
 }
 
-void  graphics::PaintStandardTextBox(HDC hdc, int x, int y, int w, int h, const char* textbool, bool enabled, bool focused, int caret_pos)
+void  graphics::PaintStandardTextBox(HDC hdc, int x, int y, int w, int h, const char* textbool, bool enabled, bool focused, int caret_pos, bool enabled_sw)
 {
 	/* ペンやブラシを用意する */
 	HPEN hpen_normal = ::CreatePen(PS_SOLID, 1, RGB(0x00, 0xff, 0x00));
@@ -159,8 +159,10 @@ void  graphics::PaintStandardTextBox(HDC hdc, int x, int y, int w, int h, const 
 		::DeleteObject(hfont_normal);
 
 		int text_width = rc.right - rc.left;
+		if(enabled_sw==true){
 		// Rectangleで細長い矩形を描いてキャレットを模倣する　★☆★
-		::Rectangle(hdc, x + 0 + text_width, y + 4, x + 0 + 2 + text_width, (y + 4) + (h-8));
+			::Rectangle(hdc, x + 0 + text_width, y + 4, x + 0 + 2 + text_width, (y + 4) + (h-8));
+		}
 	}
 	
 	/* 元々のペンやブラシに戻す */

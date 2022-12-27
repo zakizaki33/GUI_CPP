@@ -7,13 +7,11 @@
 #include "file.h"
 #include "samplefunction.h"
 
-
 // 起動時のウインドウの大きさ
 #define INIT_WINDOW_X 100
 #define INIT_WINDOW_Y 100
 #define INIT_WINDOW_W 800 //500
 #define INIT_WINDOW_H 600 //400
-
 
 // int 型にPIXELというあだ名をつけるイメージ
 typedef int PIXEL;
@@ -72,15 +70,12 @@ HWND  app::GetWindowHandle(void)
 	return s_main_window_handle;
 }
 
-
 /// <summary>ウィンドウを再描画する</summary>
 void  app::RepaintWindow(void)
 {
 	::InvalidateRect(s_main_window_handle, NULL, TRUE);
 	::UpdateWindow(s_main_window_handle);
 }
-
-
 
 /// <summary>メイン関数</summary>
 int WINAPI WinMain(

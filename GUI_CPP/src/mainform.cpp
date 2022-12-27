@@ -57,15 +57,15 @@ namespace mainform
 		bool pressed;
 		char caption[100];
 		int caret_position;
+		bool caret_SW;
 	};
 	static TEXTBOX_DATA textbox_data_table[] = {
-		{ IDC_TXT_AAA, 500, 200, 200, 40, true, true,  "12345_22-10-04", 10 },
-		{ IDC_TXT_BBB, 500, 250, 200, 40, true, false, "abcde_22-10-04", 5 },
-		{ IDC_TXT_CCC, 500, 300, 200, 40, true, false, "あいうえお_22-10-04", 0 },
+		{ IDC_TXT_AAA, 500, 200, 200, 40, true, true,  "12345_22-12-23", 10, true },
+		{ IDC_TXT_BBB, 500, 250, 200, 40, true, false, "abcde_22-10-04", 5, true },
+		{ IDC_TXT_CCC, 500, 300, 200, 40, true, false, "あいうえお_22-10-04", 0, true },
 	};
 
 	/*** アプリケーション固有の機能 ***/
-
 	static void FunctionXXX(void);
 	static void FunctionYYY(void);
 	static void FunctionZZZ(void);
@@ -107,15 +107,12 @@ void  mainform::PaintAllItems( HDC hdc )
 			button_data_table[i].x + button_data_table[i].w - padding,
 			button_data_table[i].y + button_data_table[i].h - padding
 		};
-
 		// 改行文字"\n"のところで改行される
 		::DrawText(hdc, "abc \nABC 1234567890", -1, &text_area, DT_LEFT);
-
 		// // 幅に合わせて自動的に改行される
-		// ::DrawText( hdc, "abc \nABC 1234567890", -1, &text_area, DT_LEFT | DT_WORDBREAK );
-
+		::DrawText( hdc, "abc \nABC 1234567890", -1, &text_area, DT_LEFT | DT_WORDBREAK );
 		// // １行で表示される（垂直方向の位置揃えの指定はこの場合にのみ有効）
-		// ::DrawText( hdc, "abc \nABC 1234567890", -1, &text_area, DT_LEFT | DT_VCENTER | DT_SINGLELINE );
+		::DrawText( hdc, "abc \nABC 1234567890", -1, &text_area, DT_LEFT | DT_VCENTER | DT_SINGLELINE );
 */
 	}
 
@@ -130,7 +127,8 @@ void  mainform::PaintAllItems( HDC hdc )
 			textbox_data_table[i].caption,
 			textbox_data_table[i].enabled,
 			textbox_data_table[i].pressed,
-			textbox_data_table[i].caret_position
+			textbox_data_table[i].caret_position,
+			textbox_data_table[i].caret_SW
 		);
 	}
 	char text_x[20];
@@ -145,7 +143,7 @@ void  mainform::PaintAllItems( HDC hdc )
 	graphics::DrawStandardText(hdc, 100, 240, 200, 40, text_y);
 	graphics::DrawStandardText(hdc, 100, 280, 200, 40, text_ave);
 
-	graphics::PaintStandardTextBox(hdc, 150, 320, 200, 30,"ABCDEFGHIJK" ,true, false, -1);
+	graphics::PaintStandardTextBox(hdc, 150, 320, 200, 30,"ABCDEFGHIJK" ,true, false, -1, true);
 
 	// mainform内に画像を表示させる
 	graphics::PaintBitmapFromFile(hdc, 240, 180, 120, 120, "C:\\Users\\13273_Yamazaki\\source\\repos\\GUI_CPP\\GUI_CPP\\src\\Default.bmp");

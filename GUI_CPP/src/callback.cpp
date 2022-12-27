@@ -10,6 +10,7 @@ namespace app {
 	static void OnMouse(int x, int y, bool pressed);
 	static void OnKey(int key);
 	static void OnChar(char c);
+	static void OnTimer(void);
 }
 
 // static 関数の頭につける　この関数は　callback.cppのみで使う場合に書く
@@ -118,7 +119,6 @@ static void app::OnPaint( HWND hwnd )
 	::ValidateRect(hwnd, NULL);     //画面書き直し
 }
 
-
 /// <summary>マウス入力イベントに対するコールバック関数</summary>
 static void app::OnMouse(int x, int y , bool pressed)
 {
@@ -133,7 +133,6 @@ static void app::OnMouse(int x, int y , bool pressed)
 		mainform::ReleaseButtons();
 	}
 }
-
 
 /// <summary>キーボード入力イベントに対するコールバック関数</summary>
 static void app::OnKey( int key )
@@ -177,12 +176,16 @@ static void app::OnChar(char c)
 	}
 }
 
+static void app::OnTimer(void) {
+
+}
+
 /// <summary>イベントプロシージャ</summary>
 LRESULT CALLBACK app::Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp )
 {	
 	// printf("*");  // Procedure関数が呼ばれ続けていることを確認するためのコード
 	const UINT_PTR timer_id = 901;          // タイマーの通し番号となる適当な数字
-
+	
 	switch( msg )
 	{
 		case WM_CREATE:                   // WM_CREATEイベントはウィンドウが表示されるときに発生する
@@ -194,7 +197,7 @@ LRESULT CALLBACK app::Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp )
 			// graphics::PaintStandardTextBox を呼び出す???
 			// こんな感じ？？？　swが毎回初期化される？
 			/*
-			boolean sw = true;
+			bool sw = true;
 			if (sw == true) {
 				/// 処理
 				sw = false;
@@ -204,6 +207,7 @@ LRESULT CALLBACK app::Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp )
 				sw = true;
 			}
 			*/
+			app::OnTimer();
 
 			break;
 		

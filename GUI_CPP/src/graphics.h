@@ -15,7 +15,8 @@
 namespace graphics
 {
 	void  PaintStandardButton(HDC hdc, int x, int y, int w, int h, bool enabled, bool pressed);
-	void  PaintStandardTextBox(HDC hdc, int x, int y, int w, int h, const char* text, bool enabled, bool focused, int caret_pos);
+	// void  PaintStandardTextBox(HDC hdc, int x, int y, int w, int h, const char* text, bool enabled, bool focused, int caret_pos);
+	void  PaintStandardTextBox(HDC hdc, int x, int y, int w, int h, const char* text, bool enabled, bool focused, int caret_pos, bool enabled_sw);
 
 	// ŠÈ’P‚Èü‚ğ•\¦‚·‚é
 	void  DrawStandardLine(HDC hdc, int x, int y, int w, int h);
