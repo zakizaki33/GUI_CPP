@@ -40,7 +40,7 @@ namespace mainform
 		char caption[100]; //終端文字含めて100文字
 	};
 	static BUTTON_DATA button_data_table[] = {
-		{ IDC_BTN_XXX, 100, 100, 60, 40, true, false, "Func あ" },
+		{ IDC_BTN_XXX, 100, 100, 60, 40, true, false, "File読み込みダイアログ表示" },
 		{ IDC_BTN_YYY, 200, 100, 60, 40, true, false, "Func い" },
 		{ IDC_BTN_ZZZ, 300, 100, 60, 40, true, false, "Func う" },
 	};
@@ -60,9 +60,9 @@ namespace mainform
 		bool caret_SW;
 	};
 	static TEXTBOX_DATA textbox_data_table[] = {
-		{ IDC_TXT_AAA, 500, 200, 200, 40, true, true,  "12345_22-12-23", 10, true },
-		{ IDC_TXT_BBB, 500, 250, 200, 40, true, false, "abcde_22-10-04", 5, true },
-		{ IDC_TXT_CCC, 500, 300, 200, 40, true, false, "あいうえお_22-10-04", 0, true },
+		{ IDC_TXT_AAA, 500, 200, 200, 40, true, true,  "3", 10, true },
+		{ IDC_TXT_BBB, 500, 250, 200, 40, true, false, "4", 5, true },
+		{ IDC_TXT_CCC, 500, 300, 200, 40, true, false, "2", 0, true },
 	};
 
 	/*** アプリケーション固有の機能 ***/
@@ -149,7 +149,7 @@ void  mainform::PaintAllItems( HDC hdc )
 	graphics::PaintBitmapFromFile(hdc, 240, 180, 120, 120, "C:\\Users\\13273_Yamazaki\\source\\repos\\GUI_CPP\\GUI_CPP\\src\\Default.bmp");
 
 	// mainform内に線を表示させる
-	graphics::DrawStandardLine(hdc, 10, 10, 100, 100);
+	graphics::DrawStandardLine(hdc, 200, 400, 200, 50);
 }
 
 /// <summary>指定位置のボタンを押す</summary>
@@ -271,7 +271,15 @@ void  mainform::SelectNextTextBox(void)
 void  mainform::FunctionXXX( void )
 {
 	// printf( "〇〇機能！\n" );
+	// fileダイアログを呼び出す関数 23-01-06
 	SampleFunction();
+
+	int n1 = atoi(textbox_data_table[0].caption);
+	int n2 = atoi(textbox_data_table[1].caption);
+	int n3 = atoi(textbox_data_table[2].caption);
+
+	int n = n1 * n2 * n3;
+	printf("%d\n", n);
 }
 
 /// <summary>アプリケーション固有の機能</summary>

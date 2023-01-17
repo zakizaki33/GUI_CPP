@@ -189,7 +189,7 @@ LRESULT CALLBACK app::Procedure( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp )
 	switch( msg )
 	{
 		case WM_CREATE:                   // WM_CREATEイベントはウィンドウが表示されるときに発生する
-			SetTimer(hwnd, timer_id, 1000, NULL); // 1000は1000msec
+			SetTimer(hwnd, timer_id, 5000, NULL); // 1000は1000msec
 			break;
 
 		case WM_TIMER:                    // SetTimerの設定に従って定期的にWM_TIMERが発生する

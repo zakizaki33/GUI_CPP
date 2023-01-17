@@ -187,21 +187,15 @@ void  graphics::DrawStandardLine(HDC hdc, int x, int y, int w, int h) {
 	HPEN   hpen_previous = (HPEN)::SelectObject(hdc, hpen_normal);
 	HBRUSH hbrush_previous = (HBRUSH)::SelectObject(hdc, hbrush_normal);
 
-	/* 条件に合わせてボタンの絵を描く */
-
-		::Rectangle(hdc, x, y, x + w, y + h);
-		::MoveToEx(hdc, 100, 400, NULL);
-		::LineTo(hdc, 100+x*10, 400+y*10);
-
+	/* 条件に合わせてボタンの直線を描く */
+	::MoveToEx(hdc, x, y, NULL);
+	::LineTo(hdc, x+w, y+h);
 
 	/* 元々のペンやブラシに戻す */
-
 	::SelectObject(hdc, hpen_previous);
 	::SelectObject(hdc, hbrush_previous);
 
-
 	/* 自分で作ったペンやブラシを削除する */
-
 	::DeleteObject(hpen_normal);
 	::DeleteObject(hbrush_normal);
 }

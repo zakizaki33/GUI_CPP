@@ -7,8 +7,6 @@
 class CFile
 {
 // 記述しないとデフォルトではpublic (class の時は逆)
-
-
 private:
 	char m_path[300];
 public:
@@ -16,7 +14,6 @@ public:
 
 	void SetPath(const char* path);
 	const char* GetPath(void);
-
 
 	bool IsExist(void);
 	// void FileAccessSample(const char* path);

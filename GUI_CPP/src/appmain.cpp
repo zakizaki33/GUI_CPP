@@ -20,6 +20,7 @@ PIXEL b = 9;
 
 static HWND s_main_window_handle;
 
+// appmain.cpp内の関数なのでヘッダーファイルに書き込みの必要なし
 void FileAccessSample(const char* path)
 {
 	FILE* fp = NULL;
@@ -27,7 +28,7 @@ void FileAccessSample(const char* path)
 	// ファイルを書き込み用に開く
 	if (fopen_s(&fp, path, "w") == 0)
 	{
-		char input_data[] = "Hello, world!\n12345\n";
+		char input_data[] = "Hello, world!\n12345\ntesttest\n";
 
 		// 文字列を書き込む
 		if (fp != 0) {
@@ -101,9 +102,10 @@ int WINAPI WinMain(
 		printf("このファイルは存在しません\n");
 	}
 	*/
+
+	// 動作確認用のファイル読み出し関数
 	FileAccessSample("C:\\Users\\13273_Yamazaki\\source\\repos\\GUI_CPP\\GUI_CPP\\src\\input.txt");
 	
-
 	char class_name[] = "my_standard_window"; 
 
 	WNDCLASSEX  window_class_settings = {
@@ -150,8 +152,8 @@ int WINAPI WinMain(
 
 	ShowWindow( hwnd, nCmdShow );
 
-	/*
-	// ファイルダイアログを表示させる
+	
+	// ファイルダイアログを表示させる(練習)
 	{
 		// CFile file = { "c:\\soft\\*.*" };  // 最初に開く場所
 		CFile file = { "D:\\13273_Yamazaki\\Desktop\\*.*" };
@@ -160,14 +162,14 @@ int WINAPI WinMain(
 		if (file.SelectSaveFile(hwnd, "PDFfile\0*.pdf\0テキストファイル\0*.txt\0全てのファイル\0*.*\0")) //\0 終端文字
 		{
 			printf("ファイルが選択されました。\n");
-			printf("%s\n", file.path);
+			// printf("%s\n", file.m_path); // privateは触れない
 		}
 		else
 		{
 			printf("ファイルの選択は中断されました。\n");
 		}
 	}
-	*/
+	
 
 	// samplefunction.h より
 	// SampleFunction();

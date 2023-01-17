@@ -4,11 +4,9 @@
 #include "file.h"
 #include "samplefunction.h"
 
-
 static int s_input_x = 0;
 static int s_input_y = 0;
 static int s_output_average = 0;
-
 
 /// <summary>ファイルから１組分のデータを読み込む</summary>
 static bool read_one_data( FILE *fp, char *buffer, int max_length )
@@ -71,7 +69,6 @@ static bool read_one_data( FILE *fp, char *buffer, int max_length )
 		return true;
 	}
 }
-
 
 /// <summary>ファイルからデータを読み込んで画面に表示する一連の処理</summary>
 void SampleFunction( void )
@@ -148,20 +145,17 @@ void SampleFunction( void )
 	app::RepaintWindow();
 }
 
-
 /// <summary>現在のデータを取得する</summary>
 int GetCurrentX( void )
 {
 	return s_input_x;
 }
 
-
 /// <summary>現在のデータを取得する</summary>
 int GetCurrentY( void )
 {
 	return s_input_y;
 }
-
 
 /// <summary>現在のデータを取得する</summary>
 int GetCurrentAverage( void )
