@@ -3,10 +3,13 @@
 #include "appmain.h"
 #include "file.h"
 #include "samplefunction.h"
+#include <iostream>
 
 static int s_input_x = 0;
 static int s_input_y = 0;
 static int s_output_average = 0;
+
+
 
 /// <summary>ファイルから１組分のデータを読み込む</summary>
 static bool read_one_data( FILE *fp, char *buffer, int max_length )
@@ -108,6 +111,14 @@ void SampleFunction( void )
 		{
 			break;
 		}
+		
+		// 2023-02-15　追記　ファイルの中身を表示
+		std::cout << buffer << std::endl; 
+		str_samplefunc += buffer;
+
+
+		// 
+		// mainform::textbox_data_table[2].caption;
 
 		// 読み込んだ文字列が"x="で始まっていたらそれに続く数字をｘに取り込む
 		if( strstr( buffer, "x=" ) == buffer )
@@ -144,6 +155,7 @@ void SampleFunction( void )
 
 	app::RepaintWindow();
 }
+
 
 /// <summary>現在のデータを取得する</summary>
 int GetCurrentX( void )

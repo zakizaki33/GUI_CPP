@@ -10,6 +10,7 @@
 #include <string.h>
 #include <windows.h>
 #include "samplefunction.h"
+#include <iostream>
 
 namespace mainform
 {
@@ -60,9 +61,9 @@ namespace mainform
 		bool caret_SW;
 	};
 	static TEXTBOX_DATA textbox_data_table[] = {
-		{ IDC_TXT_AAA, 500, 200, 200, 40, true, true,  "3", 10, true },
-		{ IDC_TXT_BBB, 500, 250, 200, 40, true, false, "4", 5, true },
-		{ IDC_TXT_CCC, 500, 300, 200, 40, true, false, "2", 0, true },
+		{ IDC_TXT_AAA, 400,   0, 200,  40, true, true,  "3", 10, true },
+		{ IDC_TXT_BBB, 400,  50, 200,  40, true, false, "4", 5, true },
+		{ IDC_TXT_CCC, 400, 100, 300, 400, true, false, "lensdata\nlensdata\n", 0, true },
 	};
 
 	/*** アプリケーション固有の機能 ***/
@@ -75,7 +76,7 @@ namespace mainform
 void  mainform::PaintAllItems( HDC hdc )
 {
 	// 画面を白く塗りつぶす
-	BitBlt(hdc, 0, 0, 800, 600, NULL, 0, 0, WHITENESS);
+	BitBlt(hdc, 0, 0, 1200, 1000, NULL, 0, 0, WHITENESS);
 	
 	for( int i = 0; i < 3; i++ )
 	{
@@ -280,6 +281,11 @@ void  mainform::FunctionXXX( void )
 
 	int n = n1 * n2 * n3;
 	printf("%d\n", n);
+
+	//
+	std::cout << "str_samplefunc START" << std::endl;
+	std::cout << str_samplefunc << std::endl;
+	std::cout << "END" << std::endl;
 }
 
 /// <summary>アプリケーション固有の機能</summary>

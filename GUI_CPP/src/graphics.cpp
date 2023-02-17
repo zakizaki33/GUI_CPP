@@ -397,7 +397,9 @@ void  graphics::DrawCustumizedText(HDC hdc, int x, int y, int w, int h, const ch
 	};
 
 	// 位置を調整しやすいように縦方向も中央揃え（改行文字は無効）
-	::DrawTextA(hdc, text, -1, &text_area, DT_LEFT| DT_VCENTER | DT_SINGLELINE);	// 改行文字"\n"のところで改行される
+	//::DrawTextA(hdc, text, -1, &text_area, DT_LEFT| DT_VCENTER | DT_SINGLELINE);	
+	::DrawTextA(hdc, text, -1, &text_area, DT_LEFT | DT_VCENTER );	// 2023-02-14追記 DT_VCENTERはDT_SINGLELIEとセットで使う
+
 
 	/* 元の設定に戻す */
 	::SelectObject(hdc, hfont_previous);

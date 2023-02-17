@@ -170,8 +170,7 @@ int WINAPI WinMain(
 		}
 	}
 	
-
-	// samplefunction.h より
+	// samplefunction.h よりファイルダイアログが開く
 	// SampleFunction();
 
 	MSG msg;
