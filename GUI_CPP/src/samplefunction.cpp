@@ -115,6 +115,7 @@ void SampleFunction( void )
 		// 2023-02-15　追記　ファイルの中身を表示
 		std::cout << buffer << std::endl; 
 		str_samplefunc += buffer;
+		strcat_s(buffer2, buffer);
 
 
 		// 

@@ -4,6 +4,7 @@
 
 // 文字列を格納する変数を定義
 static std::string str_samplefunc;
+static char buffer2[100 + 1];
 
 /// <summary>ファイルからデータを読み込んで画面に表示する一連の処理</summary>
 void  SampleFunction(void );

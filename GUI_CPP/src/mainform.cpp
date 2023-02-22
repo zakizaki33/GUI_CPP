@@ -282,10 +282,21 @@ void  mainform::FunctionXXX( void )
 	int n = n1 * n2 * n3;
 	printf("%d\n", n);
 
-	//
+	// samplefunction.h のstr_samplefuncを使ってみる
+
 	std::cout << "str_samplefunc START" << std::endl;
+	std::cout << "std::coutが使えない" << std::endl;
 	std::cout << str_samplefunc << std::endl;
+	std::cout << str_samplefunc.size() << std::endl;
+	std::cout << "printfでやってみる" << std::endl;
+	printf("%s\n", str_samplefunc.c_str());
 	std::cout << "END" << std::endl;
+
+	std::string temp_str = str_samplefunc;
+	std::cout << temp_str << std::endl;
+
+	printf("%s\n", buffer2);
+
 }
 
 /// <summary>アプリケーション固有の機能</summary>
