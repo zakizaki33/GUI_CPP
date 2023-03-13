@@ -9,7 +9,7 @@ static int s_input_x = 0;
 static int s_input_y = 0;
 static int s_output_average = 0;
 
-
+std::string str_samplefunc;
 
 /// <summary>ファイルから１組分のデータを読み込む</summary>
 static bool read_one_data( FILE *fp, char *buffer, int max_length )
@@ -156,7 +156,6 @@ void SampleFunction( void )
 
 	app::RepaintWindow();
 }
-
 
 /// <summary>現在のデータを取得する</summary>
 int GetCurrentX( void )

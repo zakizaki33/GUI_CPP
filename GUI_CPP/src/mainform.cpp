@@ -63,7 +63,7 @@ namespace mainform
 	static TEXTBOX_DATA textbox_data_table[] = {
 		{ IDC_TXT_AAA, 400,   0, 200,  40, true, true,  "3", 10, true },
 		{ IDC_TXT_BBB, 400,  50, 200,  40, true, false, "4", 5, true },
-		{ IDC_TXT_CCC, 400, 100, 300, 400, true, false, "lensdata\nlensdata\n", 0, true },
+		{ IDC_TXT_CCC, 400, 100, 1000, 400, true, false, "lensdata\nlensdata\n", 0, true },
 	};
 
 	/*** アプリケーション固有の機能 ***/
@@ -273,7 +273,9 @@ void  mainform::FunctionXXX( void )
 {
 	// printf( "〇〇機能！\n" );
 	// fileダイアログを呼び出す関数 23-01-06
+	// extern std::string str_samplefunc が使えるようになる
 	SampleFunction();
+
 
 	int n1 = atoi(textbox_data_table[0].caption);
 	int n2 = atoi(textbox_data_table[1].caption);
@@ -297,6 +299,17 @@ void  mainform::FunctionXXX( void )
 
 	printf("%s\n", buffer2);
 
+	// textbox_data_table　の　caption　を書き換える
+	// strcpy(textbox_data_table[2].caption , str_samplefunc.c_str());
+
+	// char text1[300];
+	strncpy_s(
+		textbox_data_table[2].caption,										// コピー先
+		sizeof(textbox_data_table[2].caption),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
+		str_samplefunc.c_str(),												// コピー元
+		sizeof(str_samplefunc)													// コピーしたい文字数 
+	);
+	app::RepaintWindow();
 }
 
 /// <summary>アプリケーション固有の機能</summary>

@@ -10,7 +10,7 @@
 // 起動時のウインドウの大きさ
 #define INIT_WINDOW_X 100
 #define INIT_WINDOW_Y 100
-#define INIT_WINDOW_W 800 //500
+#define INIT_WINDOW_W 1600 //500
 #define INIT_WINDOW_H 600 //400
 
 // int 型にPIXELというあだ名をつけるイメージ
