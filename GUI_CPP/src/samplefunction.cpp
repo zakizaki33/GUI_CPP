@@ -46,8 +46,16 @@ static bool read_one_data( FILE *fp, char *buffer, int max_length )
 		// 読み込んだのが改行文字だった場合にはデータの区切りとみなして中断する
 		if( c == '\n' )
 		{
-			buffer[count] = '\0';
-			break;
+			// 2023-03-15 編集　ここから
+			// buffer[count] = '\n';
+			// count++;
+			// buffer[count] = '\0';
+			// ここまで
+			
+			// そもそも改行コードでは何もしない
+			// TEXTBOX_DATAのcaptionとbufferを1000文字に変更
+			// buffer[count] = '\0';
+			// break;
 		}
 
 		// 上記以外の文字を読み込んだ場合にはバッファに追加する
@@ -105,9 +113,11 @@ void SampleFunction( void )
 
 	for( ; ; )
 	{
-		char buffer[100 + 1];
+		// char buffer[100 + 1];
+		char buffer[1000 + 1];
 
-		if( read_one_data( fp, buffer, 100 ) == false )
+		// if( read_one_data( fp, buffer, 100 ) == false )
+		if (read_one_data(fp, buffer, 1000) == false)
 		{
 			break;
 		}
@@ -115,7 +125,7 @@ void SampleFunction( void )
 		// 2023-02-15　追記　ファイルの中身を表示
 		std::cout << buffer << std::endl; 
 		str_samplefunc += buffer;
-		strcat_s(buffer2, buffer);
+		// strcat_s(buffer2, buffer);
 
 
 		// 

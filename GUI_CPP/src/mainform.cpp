@@ -56,7 +56,8 @@ namespace mainform
 		int h;
 		bool enabled;
 		bool pressed;
-		char caption[100];
+		// char caption[100];
+		char caption[1000];
 		int caret_position;
 		bool caret_SW;
 	};
@@ -304,10 +305,15 @@ void  mainform::FunctionXXX( void )
 
 	// char text1[300];
 	strncpy_s(
-		textbox_data_table[2].caption,										// コピー先
-		sizeof(textbox_data_table[2].caption),								// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
-		str_samplefunc.c_str(),												// コピー元
-		sizeof(str_samplefunc)													// コピーしたい文字数 
+		textbox_data_table[2].caption,					// コピー先
+		sizeof(textbox_data_table[2].caption),			// コピー先のサイズ（終端文字を含めて何文字までコピーできるか）
+		str_samplefunc.c_str(),							// コピー元
+		// sizeof(str_samplefunc)						// コピーしたい文字数 
+		// c_str() からの文字数を取得　①
+		// strlen(str_samplefunc.c_str())
+		_TRUNCATE
+		// std::string からの文字数を取得　② C++流
+		//str_samplefunc.length()
 	);
 	app::RepaintWindow();
 }

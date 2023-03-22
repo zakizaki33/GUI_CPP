@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\input.txt" />
+    <Text Include="src\lensdata.txt" />
     <Text Include="src\test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

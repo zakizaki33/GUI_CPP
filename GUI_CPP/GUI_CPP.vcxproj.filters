@@ -72,5 +72,8 @@
     <Text Include="src\test.txt">
       <Filter>リソース ファイル</Filter>
     </Text>
+    <Text Include="src\lensdata.txt">
+      <Filter>リソース ファイル</Filter>
+    </Text>
   </ItemGroup>
 </Project>
